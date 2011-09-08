@@ -17,6 +17,8 @@ static char paddingLeftKey;
 static char paddingRightKey;
 static char paddingTopKey;
 static char paddingBottomKey;
+static char objectTagKey;
+
 
 //--------------------------------------------------------------------------------------------------------------
 #pragma mark - Properties
@@ -95,6 +97,16 @@ static char paddingBottomKey;
 - (void) setPaddingRight:(NSNumber *)paddingRight {
     
     objc_setAssociatedObject(self, &paddingRightKey, paddingRight, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSObject*) objectTag {
+    
+    return objc_getAssociatedObject(self, &objectTagKey);
+}
+
+- (void) setObjectTag:(NSObject *)objectTag {
+    
+    objc_setAssociatedObject(self, &objectTagKey, objectTag, OBJC_ASSOCIATION_RETAIN);
 }
 
 @end

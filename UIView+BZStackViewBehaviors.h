@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSNumber *paddingTop;
 @property (nonatomic, retain) NSNumber *paddingBottom; 
 
+@property (nonatomic, retain) NSObject *objectTag;
+
 @end

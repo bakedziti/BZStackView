@@ -49,10 +49,20 @@
     
     int contentHeight = 0;
     
+    if ([self.delegate respondsToSelector:@selector(stackViewWillLayoutSubViews:)]) {
+        
+        [self.delegate stackViewWillLayoutSubViews:self];
+    }
+    
     for (int i = 0; i < [self.subviews count]; ++i) {
 
         UIView *subView = [self.subviews objectAtIndex:i];
-
+        
+        //Ignore things that are meant to be invisible
+        if (subView.hidden == YES || subView.alpha == 0.0) {
+            continue;
+        }
+        
         contentHeight += subView.frame.size.height + [subView.paddingTop floatValue] + [subView.paddingBottom floatValue];
         
         //if this is the first subView, there is no previous
@@ -65,6 +75,8 @@
         UIView *prevView = [self.subviews objectAtIndex:i -1];
     
         subView.frame = [self adjustedRectForSubView:subView withPreviousSubView:prevView];
+        
+//        NSLog(@"%@'s height:%f", [subView class], subView.frame.size.height);
 
         //If this is the last one, then set the contentSize
         if (i == [self.subviews count] - 1) {
@@ -72,9 +84,9 @@
             self.contentSize = CGSizeMake(self.frame.size.width, contentHeight);
             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.contentSize.height);
             
-            if ([delegate respondsToSelector:@selector(stackView:contentSizeDidChange:)]) {
+            if ([self.delegate respondsToSelector:@selector(stackView:contentSizeDidChange:)]) {
                 
-                [delegate stackView:self contentSizeDidChange:self.contentSize];
+                [self.delegate stackView:self contentSizeDidChange:self.contentSize];
             }
         }
 

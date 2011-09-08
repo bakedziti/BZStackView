@@ -14,13 +14,15 @@
     
 }
 
-@property (nonatomic, assign) id<BZStackViewDelegate> delegate;
+@property (nonatomic, assign) IBOutlet id<BZStackViewDelegate> delegate;
 @property (nonatomic, assign) CGSize contentSize;
 
 @end
 
 @protocol BZStackViewDelegate <NSObject>
 
+@optional
+- (void) stackViewWillLayoutSubViews:(BZStackView*)stackView;
 - (void) stackView:(BZStackView*)stackView contentSizeDidChange:(CGSize)contentSize;
 
 @end
